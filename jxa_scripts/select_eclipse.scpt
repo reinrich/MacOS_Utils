@@ -40,26 +40,22 @@
 //
 
 
-var app = Application.currentApplication()
-var Sys = Application('System Events')
-var windowNames = Sys.applicationProcesses.where({name: "Eclipse"}).windows.name()
-// windowNames.forEach(k => console.log(k))
-windowNames = windowNames.map(String)
+const Sys = Application('System Events')
+const windowNames = Sys.applicationProcesses.where({name: "Eclipse"}).windows.name().map(String)
 
 // Prepare to show dialog to make selection
-app.includeStandardAdditions = true;
-app.activate();
+Sys.includeStandardAdditions = true;
+Sys.activate();
 
 if (windowNames.length < 1) {
-    app.displayDialog("No Eclipse windows found.");
+    Sys.displayDialog("No Eclipse windows found.");
 } else {
-    var selected = app.chooseFromList(windowNames, { withPrompt: "Select Eclipse Instance:" })
-    selected = selected[0]
+    const selected = Sys.chooseFromList(windowNames, { withPrompt: "Select Eclipse Instance:" })[0]
     //console.log("selected: " + selected)
 
     // debugger  // uncomment to break into (Safari) JS debugger when running in Script Editor.app
 
-    var eclApps = Sys.applicationProcesses.where({name: "Eclipse"})
+    const eclApps = Sys.applicationProcesses.where({name: "Eclipse"})
 
     // The following works
     //     eclApps[0].frontmost = true
